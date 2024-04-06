@@ -111,7 +111,7 @@ type Weapon struct {
 	ShotsWhenFired             int
 	ProjectilesPerShot         int
 	AttackRecoil               int
-	Instability                int
+	Instability                float64
 	WeaponEffectID             string
 }
 
