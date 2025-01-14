@@ -64,7 +64,6 @@ var BulkUploadCmd = &cobra.Command{
 		}
 
 		csrfToken, err := uploadClient.GetToken(mwclient.CSRFToken)
-		fmt.Printf("Token should be %v\n", csrfToken)
 		stolenCookies := uploadClient.DumpCookies()
 
 		uploadParams := map[string]string{
@@ -80,8 +79,6 @@ var BulkUploadCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Printf("dir is %v\n", dir)
-
 		// Use io.WalkDir to walk through the files in the current directory
 		err = filepath.WalkDir(dir, func(path string, d os.DirEntry, err error) error {
 			if err != nil {
@@ -92,7 +89,6 @@ var BulkUploadCmd = &cobra.Command{
 			ext := filepath.Ext(path)
 			if ext == ".jpg" || ext == ".jpeg" || ext == ".png" || ext == ".svg" {
 				(uploadParams)["filename"] = filepath.Base(path)
-				fmt.Printf("%v\n", uploadParams)
 				// Call the arbitrary function with the file name
 				fmt.Printf("uploading file: %v\n", filepath.Base(path))
 				err = uploader.Upload(url, filepath.Base(path), uploadParams, stolenCookies)
